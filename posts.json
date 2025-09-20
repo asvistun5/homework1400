@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "пост",
+    "description": "Описание",
+    "image": "https://i.ytimg.com/vi/VQ55GavjcEI/hqdefault.jpg?sqp=-oaymwFBCNACELwBSFryq4qpAzMIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB8AEB-AH-CYAC0AWKAgwIABABGBggNSh_MA8=&rs=AOn4CLDuXSDbznqlUTLEAmVFIb61m6M9Yg",
+    "likes": 10
+  },
+  {
+    "id": 2,
+    "title": "пост2",
+    "description": "Описание",
+    "image": "https://i.ytimg.com/vi/BVUQcfWeRTI/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYHiAZKH8wDw==&rs=AOn4CLDIiVm7ubWmR4L2MAq0t2VI2fcj9A",
+    "likes": 23
+  }
+]
