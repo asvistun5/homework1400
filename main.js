@@ -48,7 +48,7 @@ app.get('/posts/:id', (req, res) => {
         return String(post.id) === postId;
     });
 
-    if (found === undefined || found === null) {
+    if (!found) {
         res.status(404).json({ error: "404 not found" });
         return;
     }
