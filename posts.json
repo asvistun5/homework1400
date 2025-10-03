@@ -12,5 +12,12 @@
     "description": "Описание",
     "image": "https://i.ytimg.com/vi/BVUQcfWeRTI/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYHiAZKH8wDw==&rs=AOn4CLDIiVm7ubWmR4L2MAq0t2VI2fcj9A",
     "likes": 23
+  },
+  {
+    "id": 3,
+    "title": "Мой пост",
+    "description": "Это описание",
+    "image": "https://example.com/image.jpg",
+    "date": "2025-10-03 22:20:09"
   }
 ]
