@@ -19,5 +19,12 @@
     "description": "Это описание",
     "image": "https://example.com/image.jpg",
     "date": "2025-10-03 22:20:09"
+  },
+  {
+    "id": 4,
+    "title": "Test post",
+    "description": "Hello world",
+    "image": "image.png",
+    "date": "2025-10-06 20:48:09"
   }
 ]
