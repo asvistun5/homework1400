@@ -1,7 +1,7 @@
-const express = require('express');
-const postRouter = require('./src/Post/router');
+import express from 'express';
+import postRouter from './src/Post/router';
 
-const app = express();
+const app: express.Express = express()
 app.use(express.json());
 app.use(postRouter);
 

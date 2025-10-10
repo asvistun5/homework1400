@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+import postController from './controller';
 
-const postController = require('./controller');
+const router: express.Router = express.Router();
 
 router.get('/timestamp', postController.timestamp);
 router.get('/posts', postController.getAll);
@@ -9,4 +9,4 @@ router.get('/posts/:id', postController.getById);
 router.post('/posts', postController.create);
 
 
-module.exports = router
+export default router;
