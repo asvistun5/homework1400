@@ -7,11 +7,15 @@ const postController = {
         res.json({ timestamp: moment().format('YYYY-MM-DD HH:mm:ss') });
     },
 
-    getAll(req: Request, res: Response) {
+    async getAll(req: Request, res: Response) {
         try {
             const skip = Number(req.query.skip) || 0;
             const take = Number(req.query.take) || 10;
-            const posts = postService.getAll(skip, take);
+            //controller
+            const skipNum = typeof skip === 'string' ? parseInt(skip) : skip || 0;
+            const takeNum = take ? (typeof take === 'string' ? parseInt(take) : take) : undefined;
+            
+            const posts = await postService.getAll(skipNum, takeNum);
             res.json({ posts });
         } catch {
             res.status(500).json({ error: 'Error reading posts file' });

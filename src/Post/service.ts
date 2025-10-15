@@ -11,9 +11,8 @@ function getDate(): string {
 const postService = {
     async getAll(skip: number | string = 0, take?: number | string) {
         const data = JSON.parse(await fs.readFile(prodPath, 'utf-8'));
-        const skipNum = typeof skip === 'string' ? parseInt(skip) : skip || 0;
-        const takeNum = take ? (typeof take === 'string' ? parseInt(take) : take) : data.length;
-        return data.slice(skipNum, skipNum + takeNum);
+        //console.log(data);
+        return data.slice(skip, skip + (take ?? data.length));
     },
 
     async getById(id: number | string) {
