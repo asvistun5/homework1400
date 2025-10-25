@@ -1,7 +1,11 @@
+//import { PrismaClient } from '../../generated/prisma';
 import moment from 'moment';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { Post, CreatePostData, UpdatePostData } from './types';
+
+
+//const prisma = new PrismaClient();
 
 
 const prodPath = path.join(__dirname, '../../posts.json');
@@ -54,6 +58,15 @@ const postService = {
             console.log(error);
             return null;
         }
+    },
+    async delete(id: number) {
+        /*try {
+            const post = await prisma.post.delete({ where: { id } });
+            return post;
+        } catch (error) {
+            res.status(404).json({ error: error });
+            return null;
+        }*/
     }
 };
 
