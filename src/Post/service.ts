@@ -1,72 +1,60 @@
-//import { PrismaClient } from '../../generated/prisma';
-import moment from 'moment';
-import { promises as fs } from 'fs';
+import { PrismaClient } from '../generated/prisma';
 import path from 'path';
 import { Post, CreatePostData, UpdatePostData } from './types';
 
 
-//const prisma = new PrismaClient();
-
-
+const prisma = new PrismaClient();
 const prodPath = path.join(__dirname, '../../posts.json');
 
+
 function getDate(): string {
-    return moment().format('YYYY-MM-DD HH:mm:ss');
+    return new Date().toISOString();
 }
 
 const postService = {
-    async getAll(skip: number = 0, take?: number) {
-        const data: Post[] = JSON.parse(await fs.readFile(prodPath, 'utf-8'));
-        //console.log(data);
-        return data.slice(skip, skip + (take ?? data.length));
+    async getAll(skip: number = 0, take: number) {
+        return prisma.post.findMany({
+            skip,
+            take,
+            orderBy: { id: 'asc' },
+        })
     },
 
-    async getById(id: number | string) {
-        const data: Post[] = JSON.parse(await fs.readFile(prodPath, 'utf-8'));
-        return data.find((p: any) => String(p.id) === String(id));
+    async getById(id: number) {
+        return prisma.post.findUnique({ where: { id } });
     },
 
     async create(input: CreatePostData) {
-        const data: Post[] = JSON.parse(await fs.readFile(prodPath, 'utf-8'));
-        const newPost: Post = {
-            id: data.length + 1,
+        return prisma.post.create({
+          data: {
             title: input.title,
             description: input.description,
             image: input.image,
-            date: getDate()
-        };
-        data.push(newPost);
-        await fs.writeFile(prodPath, JSON.stringify(data, null, 2), 'utf-8');
-        return newPost;
+            date: getDate(),
+          },
+        });
     },
 
     async update(id: number, data: UpdatePostData) {
-        const post = await this.getById(id);
+        const post = await prisma.post.findUnique({ where: { id } });
         if (!post) return null;
-        
-        try {
-            const updatedPost: Post = { ...post, ...data };
-            const fileData: Post[] = JSON.parse(await fs.readFile(prodPath, 'utf-8'));
-            const index = fileData.findIndex((p) => p.id === id);
-            if (index === -1) return null;
-        
-            fileData[index] = updatedPost;
-            await fs.writeFile(prodPath, JSON.stringify(fileData, null, 2), 'utf-8');
-        
-            return updatedPost;
-        } catch (error) {
-            console.log(error);
-            return null;
-        }
+
+        return prisma.post.update({
+            where: { id },
+            data,
+        });
     },
+
     async delete(id: number) {
-        /*try {
-            const post = await prisma.post.delete({ where: { id } });
-            return post;
-        } catch (error) {
-            res.status(404).json({ error: error });
-            return null;
-        }*/
+        try {
+            const deletedPost = await prisma.post.delete({ where: { id } });
+            return deletedPost;
+        } catch (error: any) {
+            if (error.code === 'P2025') {
+                return null;
+            }
+            throw error;
+        }
     }
 };
 

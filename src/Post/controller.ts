@@ -13,7 +13,7 @@ const postController = {
         try {
             const skip = Number(req.query.skip) || 0;
             const take = Number(req.query.take) || 10;
-            //controller
+
             const posts = await postService.getAll(skip, take);
             res.json({ posts });
         } catch (error) {
@@ -24,7 +24,7 @@ const postController = {
 
     async getById(req: Request, res: Response) {
         try {
-            const id = req.params.id;
+            const id = Number(req.params.id);
             if (!id) return res.status(400).json({ error: 'ID is required' });
 
             const post = await postService.getById(id);
@@ -71,10 +71,10 @@ const postController = {
         
             const updatedPost: Post = {
                 id: post.id,
-                date: post.date,
                 title: title ?? post.title,
                 description: description ?? post.description,
                 image: image ?? post.image,
+                date: post.date,
             };
         
             const result = await postService.update(id, updatedPost);
@@ -87,6 +87,21 @@ const postController = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error updating post' });
+        }
+    },
+
+    async delete(req: Request, res: Response) {
+        try {
+            const id = Number(req.params.id);
+            if (isNaN(id)) return res.status(400).json({ error: 'ID must be a number' });
+
+            const deletedPost = await postService.delete(id);
+            if (!deletedPost) return res.status(404).json({ error: 'Post not found' });
+
+            res.json({ message: 'Post deleted successfully', deletedPost });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error deleting post' });
         }
     }
 };
