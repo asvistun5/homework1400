@@ -1,35 +1,24 @@
 import { Prisma } from "../generated/prisma"
 
-export type Post = Prisma.PostGetPayload<{}>
-export type CreatePost = Prisma.PostUncheckedCreateInput
-export type UpdatePost = Prisma.PostUncheckedUpdateInput
+export type Tag = Prisma.TagGetPayload<{}>
+export type CreateTag = Prisma.TagUncheckedCreateInput
+export type UpdateTag = Prisma.TagUncheckedUpdateInput
 
-export interface PostWithTags extends Post {
-  tags: string[];
+export interface TagRepositoryContract {
+    getAll(skip?: number, take?: number): Promise<Tag[]>;
+    getById(id: number): Promise<Tag | null>;
+    create(data: CreateTagData): Promise<Tag>;
+    update(id: number, data: UpdateTagData): Promise<Tag>;
+    delete(id: number): Promise<Tag>;
 }
 
-export interface CreatePostChecked extends Omit<CreatePost, 'id'> {
-  title: string;
-  description: string;
+export interface TagServiceContract {
+    getAll(skip?: number, take?: number): Promise<Tag[]>;
+    getById(id: number): Promise<Tag | null>;
+    create(data: CreateTagData): Promise<Tag>;
+    update(id: number, data: UpdateTagData): Promise<Tag | null>;
+    delete(id: number): Promise<Tag | null>;
 }
 
-export interface UpdatePostChecked extends Partial<Pick<Post, 'title' | 'description' | 'image'>> {}
-
-export interface PostRepositoryContract {
-    getAll(skip?: number, take?: number): Promise<Post[]>;
-    getById(id: number): Promise<Post | null>;
-    create(data: CreatePostData): Promise<Post>;
-    update(id: number, data: UpdatePostData): Promise<Post>;
-    delete(id: number): Promise<Post>;
-}
-
-export interface PostServiceContract {
-    getAll(skip?: number, take?: number): Promise<Post[]>;
-    getById(id: number): Promise<Post | null>;
-    create(data: CreatePostData): Promise<Post>;
-    update(id: number, data: UpdatePostData): Promise<Post | null>;
-    delete(id: number): Promise<Post | null>;
-}
-
-export type CreatePostData = Omit<Post, 'id' | 'date'>
-export type UpdatePostData = Partial<Omit<Post, 'id' | 'date'>>
+export type CreateTagData = Omit<Tag, 'id' | 'posts'>
+export type UpdateTagData = Partial<Omit<Tag, 'id' | 'posts'>>

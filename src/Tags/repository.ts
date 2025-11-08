@@ -1,10 +1,10 @@
 import prisma from '../../prisma/client';
-import { CreatePostData, UpdatePostData, PostRepositoryContract } from './types';
+import { CreateTagData, UpdateTagData, TagRepositoryContract } from './types';
 
 
-export const PostRepository: PostRepositoryContract = {
+export const tagRepository: TagRepositoryContract = {
     async getAll(skip: number = 0, take: number) {
-        return prisma.post.findMany({
+        return prisma.tag.findMany({
             skip,
             take,
             orderBy: { id: 'asc' },
@@ -12,28 +12,21 @@ export const PostRepository: PostRepositoryContract = {
     },
 
     async getById(id: number) {
-        return prisma.post.findUnique({ where: { id } });
+        return prisma.tag.findUnique({ where: { id } });
     },
 
-    async create(input: CreatePostData) {
-        return prisma.post.create({
-            data: {
-                title: input.title,
-                description: input.description,
-                image: input.image,
-                date: new Date().toISOString(),
-            },
-        });
+    async create(data: CreateTagData) {
+        return prisma.tag.create({data});
     },
 
-    async update(id: number, data: UpdatePostData) {
-        return prisma.post.update({
+    async update(id: number, data: UpdateTagData) {
+        return prisma.tag.update({
             where: { id },
             data,
         });
     },
 
     async delete(id: number) {
-        return prisma.post.delete({ where: { id } });
+        return prisma.tag.delete({ where: { id } });
     }
 }

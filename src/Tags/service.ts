@@ -1,29 +1,29 @@
-import { PostRepository } from './repository';
-import { CreatePostData, UpdatePostData, PostServiceContract } from './types';
+import { tagRepository } from './repository';
+import { CreateTagData, UpdateTagData, TagServiceContract } from './types';
 
 
-export const PostService: PostServiceContract = {
+export const tagService: TagServiceContract = {
     async getAll(skip: number = 0, take: number) {
-        return PostRepository.getAll(skip, take);
+        return tagRepository.getAll(skip, take);
     },
 
     async getById(id: number) {
-        return PostRepository.getById(id);
+        return tagRepository.getById(id);
     },
 
-    async create(input: CreatePostData) {
-        return PostRepository.create(input);
+    async create(data: CreateTagData) {
+        return tagRepository.create(data);
     },
 
-    async update(id: number, data: UpdatePostData) {
-        const post = await PostRepository.getById(id);
-        if (!post) return null;
-        return PostRepository.update(id, data);
+    async update(id: number, data: UpdateTagData) {
+        const tag = await tagRepository.getById(id);
+        if (!tag) return null;
+        return tagRepository.update(id, data);
     },
 
     async delete(id: number) {
-        const post = await PostRepository.getById(id);
-        if (!post) return null;
-        return PostRepository.delete(id);
+        const tag = await tagRepository.getById(id);
+        if (!tag) return null;
+        return tagRepository.delete(id);
     }
 }

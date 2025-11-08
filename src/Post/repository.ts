@@ -15,15 +15,8 @@ export const PostRepository: PostRepositoryContract = {
         return prisma.post.findUnique({ where: { id } });
     },
 
-    async create(input: CreatePostData) {
-        return prisma.post.create({
-            data: {
-                title: input.title,
-                description: input.description,
-                image: input.image,
-                date: new Date().toISOString(),
-            },
-        });
+    async create(data: CreatePostData) {
+        return prisma.post.create({data});
     },
 
     async update(id: number, data: UpdatePostData) {

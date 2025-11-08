@@ -11,8 +11,8 @@ export const PostService: PostServiceContract = {
         return PostRepository.getById(id);
     },
 
-    async create(input: CreatePostData) {
-        return PostRepository.create(input);
+    async create(data: CreatePostData) {
+        return PostRepository.create(data);
     },
 
     async update(id: number, data: UpdatePostData) {
