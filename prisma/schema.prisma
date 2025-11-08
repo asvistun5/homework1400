@@ -15,12 +15,12 @@ datasource db {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String?
   image       String?
   tags        PostTag[]
-  date        DateTime @default(now())
+  date        DateTime  @default(now())
 }
 
 model Tag {
@@ -30,9 +30,9 @@ model Tag {
 }
 
 model PostTag {
-  post   Post   @relation(fields: [postId], references: [id])
+  post   Post @relation(fields: [postId], references: [id])
   postId Int
-  tag    Tag    @relation(fields: [tagId], references: [id])
+  tag    Tag  @relation(fields: [tagId], references: [id])
   tagId  Int
 
   @@id([postId, tagId])

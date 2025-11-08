@@ -1,9 +1,9 @@
 import express from 'express';
 import tagController from './controller';
 
-const router: express.Router = express.Router();
+const tagRouter: express.Router = express.Router();
 
-router.get('/tags', tagController.getAll);
-router.get('/tags/:id', tagController.getById);
+tagRouter.get('/tags', tagController.getAll);
+tagRouter.get('/tags/:id', tagController.getById);
 
-export default router;
+export default tagRouter;
