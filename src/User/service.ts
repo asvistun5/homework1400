@@ -1,29 +1,41 @@
-import { PostRepository } from './repository';
-import { CreatePostData, UpdatePostData, PostServiceContract } from './types';
+import { UserServiceContract } from "./types";
+import { userRepository } from "./repository";
+import { sign } from "jsonwebtoken";
+import { ENV } from "../config/env";
+import { StringValue } from 'ms';
+import { userRepository } from './repository';
 
 
-export const PostService: PostServiceContract = {
-    async getAll(skip: number = 0, take: number) {
-        return PostRepository.getAll(skip, take);
+export const userService: UserServiceContract = {
+    async register (credentials){
+        const user = await UserRepository.findByEmail(credentials.email)
+
+        if (user){
+            throw new Error("USER_EXISTS")
+        }
+        const newUser = await userRepository.create(credentials)
+        const token = sign({id: newUser.id}, ENV.JWT_ACCESS_SECRET_KEY, {
+            expiresIn: ENV.JWT_EXPIRES_IN as StringValue
+        })
+        return token
     },
+    async login(credentials) {
+        const user = await UserRepository.findByEmail(credentials.email)
 
-    async getById(id: number) {
-        return PostRepository.getById(id);
+        if (!user){
+            throw new Error("NOT_FOUND")
+        }
+        const isMatch = credentials.password == user.password
+        if(!isMatch){
+            throw new Error("WRONG_CREDENTIALS")
+        }
+        const token = sign({id: user.id}, ENV.JWT_ACCESS_SECRET_KEY, {
+            expiresIn: ENV.JWT_EXPIRES_IN as StringValue
+        })
+        return token
     },
-
-    async create(data: CreatePostData) {
-        return PostRepository.create(data);
-    },
-
-    async update(id: number, data: UpdatePostData) {
-        const post = await PostRepository.getById(id);
-        if (!post) return null;
-        return PostRepository.update(id, data);
-    },
-
-    async delete(id: number) {
-        const post = await PostRepository.getById(id);
-        if (!post) return null;
-        return PostRepository.delete(id);
+    async me(id){
+        const user = await UserRepository.findByIdWithoutPassword(+id)
+        return user
     }
 }

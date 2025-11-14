@@ -1,32 +1,22 @@
-import prisma from '../../prisma/client';
-import { CreatePostData, UpdatePostData, PostRepositoryContract } from './types';
+import { UserRepositoryContract } from "./user.types"
+import client from '../../prisma/client';
 
 
-export const PostRepository: PostRepositoryContract = {
-    async getAll(skip: number = 0, take: number) {
-        return prisma.post.findMany({
-            skip,
-            take,
-            orderBy: { id: 'asc' },
-        });
+export const UserRepository: UserRepositoryContract = {
+    async create(credentials) {
+        return await client.user.create({data: credentials})
     },
-
-    async getById(id: number) {
-        return prisma.post.findUnique({ where: { id } });
+    async findByEmail(email) {
+        const user = await client.user.findUnique({
+            where:{email:email}
+        })
+        return user
     },
-
-    async create(data: CreatePostData) {
-        return prisma.post.create({data});
-    },
-
-    async update(id: number, data: UpdatePostData) {
-        return prisma.post.update({
-            where: { id },
-            data,
-        });
-    },
-
-    async delete(id: number) {
-        return prisma.post.delete({ where: { id } });
+    async findByIdWithoutPassword(id){
+        const user = await client.user.findUnique({
+            where:{id},
+            omit:{password: true}
+        })
+        return user
     }
 }

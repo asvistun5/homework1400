@@ -1,14 +1,10 @@
 import express from 'express';
-import postController from './controller';
+import userController from './controller';
 
 const router: express.Router = express.Router();
 
-router.get('/timestamp', postController.timestamp);
-router.get('/posts', postController.getAll);
-router.get('/posts/:id', postController.getById);
-router.post('/posts', postController.create);
-router.patch('/posts/:id', postController.update);
-router.delete('/posts/:id', postController.delete);
-
+router.post('/login', userController.login);
+router.post('/register', userController.register);
+router.get('/me', userController.me);
 
 export default router;

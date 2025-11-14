@@ -1,35 +1,30 @@
+import { Request, Response } from "express"
 import { Prisma } from "../generated/prisma"
 
-export type Post = Prisma.PostGetPayload<{}>
-export type CreatePost = Prisma.PostUncheckedCreateInput
-export type UpdatePost = Prisma.PostUncheckedUpdateInput
+export type User = Prisma.UserGetPayload<{}>
+export type UserWithoutPassword = Prisma.UserGetPayload<{omit: {password: true}}>
+export type ErrorResponse = {message: string}
+export type UserAuthResponse = {token: string}
 
-export interface PostWithTags extends Post {
-  tags: string[];
+export type UserCreate = Prisma.UserUncheckedCreateInput
+
+export interface LoginCredentials {
+    email: string,
+    password: string
+}
+export interface UserControllerContract {
+    register: (req: Request<object, string, UserCreate>, res: Response<ErrorResponse | UserAuthResponse>) => Promise<void>
+    login: (req: Request<object, ErrorResponse | UserAuthResponse, LoginCredentials>, res: Response<ErrorResponse | UserAuthResponse>) => Promise<void>
+    me: (req: Request<object, ErrorResponse | UserWithoutPassword>, res: Response<ErrorResponse | UserWithoutPassword>) => Promise<void>
 }
 
-export interface CreatePostChecked extends Omit<CreatePost, 'id'> {
-  title: string;
-  description: string;
+export interface UserRepositoryContract {
+    create: (credentials: UserCreate) => Promise<User >,
+    findByEmail: (email: string) => Promise<User | null>,
+    findByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
 }
-
-export interface UpdatePostChecked extends Partial<Pick<Post, 'title' | 'description' | 'image'>> {}
-
-export interface PostRepositoryContract {
-    getAll(skip?: number, take?: number): Promise<Post[]>;
-    getById(id: number): Promise<Post | null>;
-    create(data: CreatePostData): Promise<Post>;
-    update(id: number, data: UpdatePostData): Promise<Post>;
-    delete(id: number): Promise<Post>;
+export interface UserServiceContract {
+    register: (credentials: UserCreate) => Promise<string>,
+    login: (credentials: LoginCredentials) => Promise<string>,
+    me: (id: number) => Promise<UserWithoutPassword | null>
 }
-
-export interface PostServiceContract {
-    getAll(skip?: number, take?: number): Promise<Post[]>;
-    getById(id: number): Promise<Post | null>;
-    create(data: CreatePostData): Promise<Post>;
-    update(id: number, data: UpdatePostData): Promise<Post | null>;
-    delete(id: number): Promise<Post | null>;
-}
-
-export type CreatePostData = Omit<Post, 'id' | 'date'>
-export type UpdatePostData = Partial<Omit<Post, 'id' | 'date'>>
