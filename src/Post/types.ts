@@ -18,18 +18,15 @@ export interface UpdatePostChecked extends Partial<Pick<Post, 'title' | 'descrip
 export interface PostRepositoryContract {
     getAll(skip?: number, take?: number): Promise<Post[]>;
     getById(id: number): Promise<Post | null>;
-    create(data: CreatePostData): Promise<Post>;
-    update(id: number, data: UpdatePostData): Promise<Post>;
+    create(data: CreatePost): Promise<Post>;
+    update(id: number, data: UpdatePost): Promise<Post>;
     delete(id: number): Promise<Post>;
 }
 
 export interface PostServiceContract {
     getAll(skip?: number, take?: number): Promise<Post[]>;
     getById(id: number): Promise<Post | null>;
-    create(data: CreatePostData): Promise<Post>;
-    update(id: number, data: UpdatePostData): Promise<Post | null>;
+    create(data: CreatePost): Promise<Post>;
+    update(id: number, data: UpdatePost): Promise<Post | null>;
     delete(id: number): Promise<Post | null>;
 }
-
-export type CreatePostData = Omit<Post, 'id' | 'date'>
-export type UpdatePostData = Partial<Omit<Post, 'id' | 'date'>>

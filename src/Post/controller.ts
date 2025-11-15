@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PostService } from './service';
 import moment from 'moment';
-import { Post, CreatePostData, UpdatePostData } from './types';
+import { Post } from './types';
 
 
 const postController = {
@@ -39,14 +39,15 @@ const postController = {
 
     async create(req: Request, res: Response) {
         try {
-            const { title, description, image } = req.body;
+            const { title, description, image, createById } = req.body;
 
             if (!title || !description || !image) {
                 return res.status(422).json({ error: 'All fields (title, description, image) are required' });
             }
 
-            const newPost = await PostService.create({ title, description, image });
-            res.status(201).json(newPost);
+            //const newPost = await PostService.create({ title, description, image });
+            //res.status(201).json(newPost);
+
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error saving post' });

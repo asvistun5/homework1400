@@ -1,8 +1,8 @@
-import { UserRepositoryContract } from "./user.types"
+import { UserRepositoryContract } from "./types"
 import client from '../../prisma/client';
 
 
-export const UserRepository: UserRepositoryContract = {
+export const userRepository: UserRepositoryContract = {
     async create(credentials) {
         return await client.user.create({data: credentials})
     },

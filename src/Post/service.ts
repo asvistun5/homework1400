@@ -1,5 +1,5 @@
 import { PostRepository } from './repository';
-import { CreatePostData, UpdatePostData, PostServiceContract } from './types';
+import { CreatePost, UpdatePost, PostServiceContract } from './types';
 
 
 export const PostService: PostServiceContract = {
@@ -11,11 +11,11 @@ export const PostService: PostServiceContract = {
         return PostRepository.getById(id);
     },
 
-    async create(data: CreatePostData) {
+    async create(data: CreatePost) {
         return PostRepository.create(data);
     },
 
-    async update(id: number, data: UpdatePostData) {
+    async update(id: number, data: UpdatePost) {
         const post = await PostRepository.getById(id);
         if (!post) return null;
         return PostRepository.update(id, data);
