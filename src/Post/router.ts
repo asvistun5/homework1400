@@ -1,14 +1,15 @@
 import express from 'express';
 import postController from './controller';
+import { authMiddleware } from '../middleware/authMiddleware';
 
-const router: express.Router = express.Router();
+const postRouter: express.Router = express.Router();
 
-router.get('/timestamp', postController.timestamp);
-router.get('/posts', postController.getAll);
-router.get('/posts/:id', postController.getById);
-router.post('/posts', postController.create);
-router.patch('/posts/:id', postController.update);
-router.delete('/posts/:id', postController.delete);
+postRouter.get('/timestamp', postController.timestamp);
+postRouter.get('/posts', postController.getAll);
+postRouter.get('/posts/:id', postController.getById);
+postRouter.post('/posts', authMiddleware, postController.create);
+postRouter.patch('/posts/:id', postController.update);
+postRouter.delete('/posts/:id', postController.delete);
 
 
-export default router;
+export default postRouter;
