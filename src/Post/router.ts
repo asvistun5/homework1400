@@ -5,11 +5,11 @@ import { authMiddleware } from '../middleware/authMiddleware';
 const postRouter: express.Router = express.Router();
 
 postRouter.get('/timestamp', postController.timestamp);
-postRouter.get('/posts', postController.getAll);
-postRouter.get('/posts/:id', postController.getById);
-postRouter.post('/posts', authMiddleware, postController.create);
-postRouter.patch('/posts/:id', postController.update);
-postRouter.delete('/posts/:id', postController.delete);
+postRouter.get('', postController.getAll);
+postRouter.get('/:id', postController.getById);
+postRouter.post('', authMiddleware, postController.create);
+postRouter.patch('/:id', authMiddleware, postController.update);
+postRouter.delete('/:id', authMiddleware, postController.delete);
 
 
 export default postRouter;

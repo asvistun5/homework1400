@@ -20,10 +20,10 @@ const tagController = {
     async getById(req: Request, res: Response) {
         try {
             const id = Number(req.params.id);
-            if (!id) return res.status(400).json({ error: 'ID is required' });
+            if (!id) { res.status(400).json({ error: 'ID is required' }); return; }
 
             const tag = await tagService.getById(id);
-            if (!tag) return res.status(404).json({ error: 'not found' });
+            if (!tag) { res.status(404).json({ error: 'not found' }); return; }
 
             res.json(tag);
         } catch (error) {

@@ -38,9 +38,9 @@ model PostTag {
 model User {
   id           Int        @id @default(autoincrement())
   firstName    String
-  secondName   String
+  secondName   String?
   email        String     @unique
-  avatar       String
+  avatar       String?
   password     String
   isAdmin      Boolean    @default(false)
   createdPosts Post[]     @relation("UserCreatedPosts")

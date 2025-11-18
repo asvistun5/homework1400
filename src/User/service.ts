@@ -10,11 +10,13 @@ export const userService: UserServiceContract = {
     async register (credentials){
         const user = await userRepository.findByEmail(credentials.email)
         if (user) throw new Error("USER_EXISTS");
+        if (!credentials.firstName) throw new Error("NO_FIRSTNAME");
 
         const hashPwd = await bcrypt.hash(credentials.password, 10);
 
         const newUser = await userRepository.create({
             ...credentials,
+            firstName: credentials.firstName,
             password: hashPwd
         });
 
@@ -27,7 +29,7 @@ export const userService: UserServiceContract = {
         const user = await userRepository.findByEmail(credentials.email)
         if (!user) throw new Error("NOT_FOUND");
 
-        const isMatch = credentials.password == user.password
+        const isMatch = await bcrypt.compare(credentials.password, user.password);
         if(!isMatch) throw new Error("WRONG_CREDENTIALS");
 
 

@@ -23,7 +23,7 @@ const userController: UserControllerContract = {
 
             if (!body) { res.status(400).json({ message: 'body is required' }); return; }
 
-            const token = await userService.login(body)
+            const token = await userService.register(body)
             res.status(200).json({token})
         } catch(err) {
             console.error(err);
@@ -32,12 +32,11 @@ const userController: UserControllerContract = {
     async me(req, res) {
         try {
             const Authorization = req.headers.authorization
-
             if (!Authorization) { res.status(401).json({message: "authorization is required"}); return; }
 
             const [type, token] = Authorization.split(" ")
-
             if (type != "bearer" || !token) { res.status(401).json({message: "wrong format autharization"}); return; }
+
 
             const payload = verify(token, ENV.JWT_ACCESS_SECRET_KEY)
             if (typeof payload == "string") { res.status(401).json({message: "wrong format"}); return; }
