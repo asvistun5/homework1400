@@ -46,6 +46,7 @@ nav h1 {
     flex: none;
     order: 0;
     flex-grow: 0;
+    margin: 0 !important;
 }
 
 nav {
@@ -64,6 +65,12 @@ nav {
     align-self: stretch;
     flex-grow: 0;
     user-select: none;
+}
+
+nav > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .posts-btn {
@@ -113,6 +120,51 @@ nav {
 }
 
 main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 260px);
+}
+
+main > p {
+    text-align: center;
+    font-size: 26px;
+    color: #A1A4C0;
+}
+
+footer {
+    /* Footer */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 40px;
+gap: 10px;
+
+width: calc(100% - 80px);
+
+background: #F0F2FF;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0;
+
+}
+
+footer div {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+footer p, footer a {
+    font-size: 26px;
+    color: #A1A4C0;
+    text-decoration: none;
 }
