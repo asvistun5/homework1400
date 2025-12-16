@@ -1,7 +1,7 @@
 import express from 'express';
-import postRouter from './src/Post/router';
-import tagRouter from './src/Tags/router';
-import userRouter from './src/User/router';
+import postRouter from './backend/Post/router';
+import tagRouter from './backend/Tags/router';
+import userRouter from './backend/User/router';
 
 const app: express.Express = express()
 
