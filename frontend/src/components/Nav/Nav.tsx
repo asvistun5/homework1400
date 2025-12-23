@@ -1,4 +1,5 @@
-import postsIco from "../assets/icons/posts.svg"
+import postsIco from "../../assets/icons/posts.svg";
+
 
 export function Nav() {
     return (

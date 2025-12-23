@@ -34,7 +34,7 @@ export const posts: Post[] = [
 
 export default function PostList() {
     return (
-          <main className="post-list">
+      <>
       <aside className="post-list__filters">
         <input
           className="post-list__search"
@@ -51,7 +51,12 @@ export default function PostList() {
 
         <div className="post-list__likes">
           <span>Лайки:</span>
-          <button>&gt; 0</button>
+          <p>&gt;</p>
+          <select name="likes" id="">
+            <option value="gt0">0</option>
+            <option value="gt50">50</option>
+            <option value="gt100">100</option>
+          </select>
         </div>
       </aside>
 
@@ -60,6 +65,6 @@ export default function PostList() {
           <PostCard key={post.id} post={post}/>
         ))}
       </section>
-    </main>
+      </>
     )
 }
