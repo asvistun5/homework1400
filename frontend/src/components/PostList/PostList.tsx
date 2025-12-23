@@ -1,34 +1,65 @@
 import { Post, Tag } from "../../shared/types/forum";
+import PostCard from "../PostCard/PostCard";
 import styles from './post-list.module.css';
 
-export const tagsMock: Tag[] = [
-  { id: 1, name: "React" },
-  { id: 2, name: "TypeScript" },
-  { id: 3, name: "Backend" },
+
+export const tags: Tag[] = [
+  { id: 1, name: "#tag1" },
+  { id: 2, name: "#tag2" },
+  { id: 3, name: "#tag3" },
+  { id: 4, name: "#tag4" },
+  { id: 5, name: "#tag5" },
 ];
 
-export const postsMock: Post[] = [
+export const posts: Post[] = [
   {
     id: 1,
-    title: "Как начать с React",
-    shortDescription:
-      "React — это библиотека для создания пользовательских интерфейсов...",
-    createdAt: "10.10.2024",
-    category: { id: 1, title: "Frontend" },
-    tags: [{ id: 1, name: "React" }],
+    title: "Дай пʼять",
+    shortDescription: "Кумедний кіт дає пʼять на камеру...",
+    image: "https://placekitten.com/400/250",
+    likes: 12,
+    category: { id: 1, title: "Тварини" },
+    tags: [tags[0], tags[2]],
   },
   {
     id: 2,
-    title: "Express + Prisma",
-    shortDescription:
-      "Разберём, как связать Express с Prisma и настроить базу данных...",
-    createdAt: "12.10.2024",
-    category: { id: 2, title: "Backend" },
-    tags: [{ id: 3, name: "Backend" }],
+    title: "Дай пʼять",
+    shortDescription: "Ще один милий котик для гарного настрою...",
+    image: "https://placekitten.com/401/250",
+    likes: 3,
+    category: { id: 1, title: "Тварини" },
+    tags: [tags[1]],
   },
 ];
 
-
 export default function PostList() {
-    
+    return (
+          <main className="post-list">
+      <aside className="post-list__filters">
+        <input
+          className="post-list__search"
+          placeholder="Пошук"
+        />
+
+        <div className="post-list__tags">
+          {tags.map((tag) => (
+            <button key={tag.id} className="tag">
+              {tag.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="post-list__likes">
+          <span>Лайки:</span>
+          <button>&gt; 0</button>
+        </div>
+      </aside>
+
+      <section className="post-list__grid">
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post}/>
+        ))}
+      </section>
+    </main>
+    )
 }
