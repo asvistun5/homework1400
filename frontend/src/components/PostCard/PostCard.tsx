@@ -1,4 +1,4 @@
-import { PostCardProps } from "../../shared/types/forum";
+import { PostCardProps } from "../../shared/types/post";
 import like from '../../assets/icons/like.svg';
 import comm from '../../assets/icons/comment.svg';
 import styles from './post-card.module.css';
