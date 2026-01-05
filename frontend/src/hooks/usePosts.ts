@@ -19,7 +19,7 @@ export function usePosts() {
             })
             .then(setPosts)
             .catch(() => {
-                setError("Ошибка загрузки постов");
+                setError("Не загрузилось");
             })
             .finally(() => {
                 setLoading(false);

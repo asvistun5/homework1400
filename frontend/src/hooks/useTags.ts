@@ -19,7 +19,7 @@ export function useTags() {
             })
             .then(setTags)
             .catch(() => {
-                setError("Ошибка загрузки тегов");
+                setError("Не загрузилось");
             })
             .finally(() => {
                 setLoading(false);
