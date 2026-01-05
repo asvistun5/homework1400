@@ -3,21 +3,10 @@ import SelectTags from "./SelectTags";
 import SelectMinimumLikes from "./SelectMinimumLikes";
 
 import { Tag } from "../../shared/types/tag";
+import { FilterProps } from "../../shared/types/filter";
 
 
-
-interface Props {
-    searchValue: string;
-    setSearchValue: (value: string) => void;
-    selectedTags: number[];
-    setSelectedTags: (value: number[]) => void;
-    likesMinimumValue: number;
-    setLikesMinimumValue: (value: number) => void;
-    tags: Tag[];
-}
-
-
-export default function FilterBlock(props: Props) {
+export default function FilterBlock(props: FilterProps) {
   return (
     <aside>
       <SearchPost

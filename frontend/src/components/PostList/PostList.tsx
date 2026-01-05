@@ -1,19 +1,15 @@
-import { Post } from "../../shared/types/post";
 import PostCard from "../PostCard/PostCard";
+import { PostListProps } from "../../shared/types/post";
 
-interface Props {
-  posts: Post[];
-  searchValue: string;
-  selectedTags: number[];
-  likesMinimumValue: number;
-}
 
 export default function PostList({
-  posts,
-  searchValue,
-  selectedTags,
-  likesMinimumValue,
-}: Props) {
+    posts,
+    searchValue,
+    selectedTags,
+    likesMinimumValue,
+    loading,
+    error
+}: PostListProps) {
   const filteredPosts = posts.filter((post) => {
     const matchesSearch = post.title
       .toLowerCase()
@@ -29,6 +25,22 @@ export default function PostList({
 
     return matchesSearch && matchesTags && matchesLikes;
   });
+
+  if (loading) {
+    return (
+      <section className="loader">
+        <span>⏳ Підгружаємо...</span>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="error">
+        <span>❌ {error}</span>
+      </section>
+    );
+  }
 
   return (
     <section>

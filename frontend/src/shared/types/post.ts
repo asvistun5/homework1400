@@ -13,3 +13,12 @@ export interface Post {
 export interface PostCardProps {
   post: Post;
 }
+
+export interface PostListProps {
+    posts: Post[];
+    searchValue: string;
+    selectedTags: number[];
+    likesMinimumValue: number;
+    loading: boolean;
+    error: string | null;
+}
